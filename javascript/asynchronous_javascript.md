@@ -1,61 +1,29 @@
-[back](/README.md)
+[back](README.md)
 
-# Javascript Concepts
-
-## Scope
-- **Hoisting**: variables are assigned default value of `undefined` on interpreter’s
-  first pass through a file (creation phase)
-- **Scopes**: function invocations create their own execution contexts (within
-  global execution context), variables are looked up from inner context out
-- **Closures**: when a function is created inside of another function, a copy of
-  the function’s execution context is preserved for future invocations of the inner
-  function — this is called a closure context
-
-## Binding
-- **Implicit**: `this` is bound to the object to the left of the dot in the method invocation
-- **Explicit**:
-
-```js
-// Fn.call() binds `this` to obj
-someFn.call(obj, arg1, arg2)
-
-// Fn.apply() binds `this` to obj, args passed in array
-someFn.apply(obj, [arg1, arg2])
-
-// Fn.bind() returns Fn with given binding and args
-someFn.bind(obj, arg1, arg2)
-```
-- **New**:
-
-```js
-// constructors create a new object and bind `this` to it
-new Animal(arg1, arg2)
-```
+# Asynchronous Javascript
 
 ## Event Loop
 - Here's a great [explainer video](https://www.youtube.com/watch?v=8aGhZQkoFbQ).
 - Javascript consists of a **heap**, a **call stack**, **web APIs** that the browser
-  provides, a **job queue**, and a **task queue**
+    provides, a **job queue**, and a **task queue**
 - Javascript is single threaded runtime, which means it has one **call stack**
     per process
 - **Web APIs** let you trigger stuff on browser threads from the JS thread
 - When async web API calls complete, they enqueue their callbacks on the
-  **task queue**
+    **task queue**
 - When async web API calls wrapped in Promises complete, they enqueue their
-  callbacks on the **job queue**
+    callbacks on the **job queue**
 - The **event loop** sits between the queues and the call stack, dequeues next callback onto
-  call stack when the call stack is empty.
+    call stack when the call stack is empty.
     - Job queue callbacks a executed before task queue callbacks
 
-## Asynchronous Code
-### Events
+## Events
   - The Javascript runtime is single threaded
   - **Web APIs** let you do stuff on browser threads from the JS thread
       (e.g. listening for a click, performing a network request)
   - **Events** are how the **Web APIs** notify the JS thread about changes
-      on browser threads (e.g. a click happened, network request is complete)
   - Events are associated with specific **event targets** (e.g. DOM element, XHR request)
-### Callbacks
+## Callbacks
   - You can add a callback to an event target natively using `addEventListener`,
     the callback gets enqueued in the **task queue** every time the event fires
   - Third-party functions that use Browser APIs usually accept callbacks as
@@ -65,7 +33,7 @@ new Animal(arg1, arg2)
         follow -- "callback hell"
     - Inversion of control: you're forced to let third-party API decide how/when
       to enqueue your callbacks
-### Promises
+## Promises
   - Here's a [Deep Dive](https://exploringjs.com/deep-js/ch_implementing-promises.html)
   - A Promise object is returned synchronously from an asynchronous function in one of 3
     possible states: ‘pending’, ‘fulfilled’, ‘rejected’
@@ -86,7 +54,7 @@ new Animal(arg1, arg2)
 \*\*\* This is because the browser thread notifies the runtime thread about changes by ***updating a state object's
 status***, rather than directly ***enqueuing a callback***
 
-### Async/Await
+## Async/Await
   - Lets you write asynchronous code as you would write synchronous code by adding
       annotations
   - Annotate asynchronous functions with keyword **async**

@@ -2,4 +2,4 @@
 
 ## Table of Contents
 
-1. [Javascript Concepts](javascript_concepts/README.md)
+1. [Javascript](javascript/README.md)
