@@ -1,42 +1,53 @@
 [back](README.md)
 
-# Variable Contexts
-- **Global context** is at the top level of each file (not within any
+# Variables and Scope
+
+## Contexts
+- The **global context** is at the top level of each file (not within any
     function)
 - The interpreter makes two passes through each context:
-    - In the **Creation Phase**, all variables are added to current context and assigned
-      default value of `undefined`, (this is called **Hoisting**)
-    - In the **Execution Phase**,
-        - The interpreter executes code line by line, assigning variables values
-        - When a function call is encoutnered, a new context is embedded within
-          the current context
-            - The process starts over inside the called function'd body, starting with the **Creation Phase**...
-        - When a variable reference is encountered, the context chain is
-            searched from current context out all the way to the global context
-        - When the end of a function body is reached, it's execution context
-            is removed
-- **Lexical Scope**:
-    - variables from outer contexts are available to inner contexts (^ because
-        the entire context chain is searched on variable lookups)
-    - variables from inner context are not available to outer contexts (^ because
-        contexts don't exist after a function is finished executing)
-- **Closure Scope**: when a function is created inside of another function, a copy of
-  the outer function’s execution context (and all parents) is preserved for
-  future invocations of the inner function (e.g. if function is returned, or
-  passed as an argument, called later). This preserved context is called a **closure**.
+    - In the **creation phase**, whenever the interpreter encounters...
+        - A variable declaration, it adds it to the current context and assigns
+          it a default value of `undefined` (this is called **hoisting**)
+        - A function definition, it adds it to memory
+    - In the **execution phase**, whenever the interpreter encounters...
+        - A variable assignment, it updates the variable's value on the current context
+        - A variable reference, it searches for the variable through the context chain from the
+            current context out to the global context
+        - A function call, it creates a new variable context embedded within the current context
+            - And the process starts over from the **creation phase** inside the called function's body
+        - When the end of a function body is reached, its execution context
+            is removed from the context chain
+## Scope
+- **Variable lookups**: Variable lookups work from the *inside-out* and **not** the *outside-in*.
+    - variables from outer contexts are available to inner contexts because the
+      interpreter searches through the entire context chain on variable lookups
+      (see above)
+    - variables from inner context are not available to outer contexts because
+      contexts are removed from the context chain after a function is finished
+      executing (see above)
+- **Closures**: when a function is defined within an another function and a
+    reference to the inner function remains after the outer function finishes
+    executing (either because the inner function is returned to the caller, or
+    passed as an argument to an asynchronous function), a copy of the outer function’s
+    context chain is preserved for future invocations of the inner function.
+    This preserved context is called a **closure**.
 
-## Variable Types
+## Declarations
 
-- **no keyword**: context is global -- BAD
+- **<NO KEYWORD\>**:
+    - accessible globally
+    - avoid this because it pollutes the global namespace
 - **var**:
-    - context is entire function
+    - when declared inside a block, accessible outside of that block
     - no error when referenced before declared (weird)
     - `undefined` when referencing before declared
 - **let**:
-    - context confined to block
+    - when declared inside a block, not accessible outside of that block
+    - not accessible outside of block even within the same function
     - reference error when referenced before declared
-    - can redefine
+    - can reassign
 - **const**:
-    - context confined to block
+    - when declared inside a block, not accessible outside of that block
     - reference error when referenced before declared
-    - can’t redefine (but can mutate value)
+    - can’t reassign (but can mutate value)
