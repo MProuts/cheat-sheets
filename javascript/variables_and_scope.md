@@ -1,6 +1,6 @@
 [back](README.md)
 
-# Variables and Scope
+# Variables & Scope
 
 ## Contexts
 - The **global context** is at the top level of each file (not within any
@@ -20,12 +20,21 @@
             is removed from the context chain
 ## Scope
 - **Variable lookups**: Variable lookups work from the *inside-out* and **not** the *outside-in*.
-    - variables from outer contexts are available to inner contexts because the
-      interpreter searches through the entire context chain on variable lookups
-      (see above)
-    - variables from inner context are not available to outer contexts because
+    - Variables from inner contexts are not available to outer contexts because
       contexts are removed from the context chain after a function is finished
-      executing (see above)
+      executing \(see above\)
+    - Variables from outer contexts are available to inner contexts because the
+      interpreter searches through the entire context chain on variable lookups
+      \(see above\)
+- **Lexical Scope**:
+    - The second item above is sometimes referred to as 'lexical scope' in
+      Javascript, but it's actually a specific implementation of lexical
+      scope.
+    - Lexical scope just means that a variable's scope is determined
+      (in some way) by its location in source code, rather than the state of
+      the callstack at runtime.
+    - Most modern programming languages use lexical scope -- e.g. Ruby uses
+      lexical scope, but implements it differently.
 - **Closures**: when a function is defined within an another function and a
     reference to the inner function remains after the outer function finishes
     executing (either because the inner function is returned to the caller, or
