@@ -69,7 +69,7 @@ class DogTest
   def test_notifies_observers_when_performs_trick
     @trainer.expect(:did_trick, true, 'play dead')
     @dog.do_trick('play dead')
-    @observer.verify
+    @trainer.verify
   end
 
 end
